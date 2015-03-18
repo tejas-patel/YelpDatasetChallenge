@@ -22,22 +22,22 @@ sub crawl{
 	}
 	return @list;
 }
-$b=15001;
-$e=16000;
-$c=15001;
+$b=363001;
+$e=364000;
+$c=363001;
 
 print("Reading reviews...\n");
-my %review = %{retrieve('review.bak')};
+my %review = %{retrieve('../jsonbak/review.bak')};
 
 print("Reading users...\n");
-my %user = %{retrieve('user.bak')};
+my %user = %{retrieve('../jsonbak/user.bak')};
 $json = JSON->new->allow_nonref;
 $json = $json->relaxed([$enable]);
-open(UNS, ">>uns");
+open(UNS, ">>uns2");
 while(1){
-	print("Begining for file:"."users/".$b."_".$e."\n");
-	open(USER, "users/".$b."_".$e);
-	open(USER_SCRAP, ">scrap_user/".$b."_".$e);
+	print("Begining for file:"."../users/".$b."_".$e."\n");
+	open(USER, "../users/".$b."_".$e);
+	open(USER_SCRAP, ">../scrap_user/".$b."_".$e);
 
 	if(tell(USER)==-1){
         	last;
@@ -80,7 +80,7 @@ while(1){
 		$c+=1;
 	}
 	print "Completed extraction for file:"."users/".$b."_".$e." There were ".$d." unsuccessful searches"."\n";
-	printf "Completed %.3f\n",$c/366714; 
+	printf "Completed %.3f\n",($c/366714)*100; 
 	$b+=1000;
 	$e+=1000;
 }

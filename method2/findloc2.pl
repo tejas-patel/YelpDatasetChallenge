@@ -3,17 +3,17 @@ use JSON;
 use Data::Dumper;
 use Storable;
 
-print("Reading reviews...\n");
+#print("Reading reviews...\n");
 my %review = %{retrieve('../jsonbak/reviewbusiness.bak')};
 
-print("Reading users...\n");
+#print("Reading users...\n");
 my %user = %{retrieve('../jsonbak/user.bak')};
 
-print("Reading business...\n");
+#print("Reading business...\n");
 my %business = %{retrieve('../jsonbak/business.bak')};
 
 my %usercity;
-print("Getting Location information for reviews...\n");
+#print("Getting Location information for reviews...\n");
 foreach my $key (keys %user){
 
 	@reviewlist = split(" ",$user{$key});
@@ -34,14 +34,14 @@ foreach my $uid (keys %usercity) {
 	}
 	
     }
-    $allcity = join(" ",keys %{ $usercity{$uid} });
+    $allcity = join(",",keys %{ $usercity{$uid} });
     foreach my $city (keys %{ $usercity{$uid} }) {
         #print "$uid, $city: $usercity{$uid}{$city}\n";
         if($usercity{$uid}{$city} == $max && $maxcity ne $city ){
-                $maxcity=$maxcity." ".$city;
+                $maxcity=$maxcity.",".$city;
         }   
     }
-    print $uid." ".$maxcity." ".$max." ".$allcity."\n";
+    print $uid."\t".$maxcity."\t".$max."\t".$allcity."\n";
 }
 
 
